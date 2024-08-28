@@ -3,8 +3,6 @@ package com.sparta.gwajea.service;
 import com.sparta.gwajea.entity.User;
 import com.sparta.gwajea.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,6 +22,7 @@ public class UserService {
     }
 
     public User saveUser(User user) {
+        // Business logic can be added here if needed
         return userRepository.save(user);
     }
 
@@ -37,9 +36,5 @@ public class UserService {
 
     public List<User> getUsersByAgeGreaterThan(int age) {
         return userRepository.findByAgeGreaterThan(age);
-    }
-
-    public Page<User> getUsersWithPagination(Pageable pageable) {
-        return userRepository.findAll(pageable);
     }
 }
