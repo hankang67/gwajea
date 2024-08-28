@@ -3,6 +3,8 @@ package com.sparta.gwajea.controller;
 import com.sparta.gwajea.entity.User;
 import com.sparta.gwajea.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -35,6 +37,7 @@ public class UserController {
         if (existingUser != null) {
             existingUser.setName(user.getName());
             existingUser.setEmail(user.getEmail());
+            existingUser.setAge(user.getAge());
             return userService.saveUser(existingUser);
         }
         return null;
@@ -43,5 +46,20 @@ public class UserController {
     @DeleteMapping("/{id}")
     public void deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
+    }
+
+    @GetMapping("/search")
+    public List<User> getUsersByName(@RequestParam String name) {
+        return userService.getUsersByName(name);
+    }
+
+    @GetMapping("/age")
+    public List<User> getUsersByAgeGreaterThan(@RequestParam int age) {
+        return userService.getUsersByAgeGreaterThan(age);
+    }
+
+    @GetMapping("/page")
+    public Page<User> getUsersWithPagination(@RequestParam int page, @RequestParam int size) {
+        return userService.getUsersWithPagination(PageRequest.of(page, size));
     }
 }
