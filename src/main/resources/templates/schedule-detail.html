@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Schedule Detail</title>
+</head>
+<body>
+<h1>Schedule Detail</h1>
+<div>
+    <p>Title: <span th:text="${schedule.title}"></span></p>
+    <p>Description: <span th:text="${schedule.description}"></span></p>
+    <p>Created Date: <span th:text="${schedule.createdDate}"></span></p>
+    <p>Modified Date: <span th:text="${schedule.modifiedDate}"></span></p>
+</div>
+</body>
+</html>
