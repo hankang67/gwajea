@@ -1,39 +1,37 @@
 package com.sparta.gwajea.service;
 
+import com.sparta.gwajea.dto.CommentRequestDto;
 import com.sparta.gwajea.entity.Comment;
+import com.sparta.gwajea.entity.Schedule;
 import com.sparta.gwajea.repository.CommentRepository;
-import lombok.RequiredArgsConstructor;
+import com.sparta.gwajea.repository.ScheduleRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
 public class CommentService {
 
-    private final CommentRepository commentRepository;
+    @Autowired
+    private CommentRepository commentRepository;
 
-    public Comment saveComment(Comment comment) {
+    @Autowired
+    private ScheduleRepository scheduleRepository;
+
+    public Comment createComment(CommentRequestDto requestDto) {
+        Schedule schedule = scheduleRepository.findById(requestDto.getScheduleId())
+                .orElseThrow(() -> new IllegalArgumentException("Schedule not found"));
+
+        Comment comment = new Comment();
+        comment.setContent(requestDto.getContent());
+        comment.setUsername(requestDto.getUsername());
+        comment.setSchedule(schedule);
+
         return commentRepository.save(comment);
     }
 
-    public Optional<Comment> getComment(Long id) {
-        return commentRepository.findById(id);
-    }
-
-    public List<Comment> getCommentsByScheduleId(Long scheduleId) {
-        return commentRepository.findByScheduleId(scheduleId);
-    }
-
-    public Comment updateComment(Long id, Comment updatedComment) {
-        return commentRepository.findById(id).map(comment -> {
-            comment.setContent(updatedComment.getContent());
-            return commentRepository.save(comment);
-        }).orElseThrow(() -> new IllegalArgumentException("Comment not found"));
-    }
-
-    public void deleteComment(Long id) {
-        commentRepository.deleteById(id);
+    public List<Comment> getComments() {
+        return commentRepository.findAll();
     }
 }

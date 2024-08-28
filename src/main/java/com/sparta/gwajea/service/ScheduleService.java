@@ -1,31 +1,31 @@
+// ScheduleService.java
 package com.sparta.gwajea.service;
 
+import com.sparta.gwajea.dto.CommentRequestDto;
+import com.sparta.gwajea.dto.ScheduleRequestDto;
 import com.sparta.gwajea.entity.Schedule;
+import com.sparta.gwajea.repository.CommentRepository;
 import com.sparta.gwajea.repository.ScheduleRepository;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 public class ScheduleService {
 
-    private final ScheduleRepository scheduleRepository;
+    @Autowired
+    private ScheduleRepository scheduleRepository;
 
-    public Schedule saveSchedule(Schedule schedule) {
+    public Schedule createSchedule(ScheduleRequestDto requestDto) {
+        Schedule schedule = new Schedule();
+        schedule.setTitle(requestDto.getTitle());
+        schedule.setDescription(requestDto.getDescription());
+        schedule.setUsername(requestDto.getUsername());
         return scheduleRepository.save(schedule);
     }
 
-    public Optional<Schedule> getSchedule(Long id) {
-        return scheduleRepository.findById(id);
-    }
-
-    public Schedule updateSchedule(Long id, Schedule updatedSchedule) {
-        return scheduleRepository.findById(id).map(schedule -> {
-            schedule.setTitle(updatedSchedule.getTitle());
-            schedule.setDescription(updatedSchedule.getDescription());
-            return scheduleRepository.save(schedule);
-        }).orElseThrow(() -> new IllegalArgumentException("Schedule not found"));
+    public List<Schedule> getSchedules() {
+        return scheduleRepository.findAll();
     }
 }
