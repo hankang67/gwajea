@@ -1,4 +1,4 @@
-// ScheduleService.java
+
 package com.sparta.gwajea.service;
 
 import com.sparta.gwajea.dto.CommentRequestDto;

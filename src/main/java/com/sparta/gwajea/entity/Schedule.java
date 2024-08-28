@@ -1,4 +1,4 @@
-// Schedule.java
+
 package com.sparta.gwajea.entity;
 
 import jakarta.persistence.*;

@@ -1,4 +1,3 @@
-// ScheduleRepository.java
 package com.sparta.gwajea.repository;
 
 import com.sparta.gwajea.entity.Schedule;
