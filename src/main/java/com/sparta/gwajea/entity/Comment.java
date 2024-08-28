@@ -7,31 +7,28 @@ import lombok.Setter;
 
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
-public class Schedule {
+public class Comment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String username;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "schedule_id")
+    private Schedule schedule;
 
-    private String title;
+    private String content;
 
-    private String description;
+    private String username;  // 댓글 작성 유저명
 
     private LocalDateTime createdDate;
 
     private LocalDateTime modifiedDate;
-
-    @OneToMany(mappedBy = "schedule", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Comment> comments = new ArrayList<>();
 
     @PrePersist
     protected void onCreate() {

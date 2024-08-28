@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Comment Detail</title>
+</head>
+<body>
+<h1>Comment Detail</h1>
+<div>
+    <p>Content: <span th:text="${comment.content}"></span></p>
+    <p>Username: <span th:text="${comment.username}"></span></p>
+    <p>Created Date: <span th:text="${comment.createdDate}"></span></p>
+    <p>Modified Date: <span th:text="${comment.modifiedDate}"></span></p>
+</div>
+<a th:href="@{/schedules/{id}(id=${comment.schedule.id})}">Back to Schedule</a>
+</body>
+</html>
